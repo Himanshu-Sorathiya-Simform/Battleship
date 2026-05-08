@@ -23,7 +23,13 @@ body {
 	gap: 5rem;
 }
 
-.grid {
+.player-play-area {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.player-grid {
 	border: 1px solid black;
 
 	display: grid;
@@ -34,4 +40,15 @@ body {
 	padding: 1.5rem;
 	border: 1px solid black;
 	cursor: pointer;
+}
+
+.player-blocks {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.block {
+	background-color: orangered;
 }
