@@ -2,6 +2,9 @@ import { elements } from './elements.js';
 import { assignTurn, initBoard } from './handlers/boardHandlers.js';
 import { game } from './handlers/gameHandlers.js';
 
+let player1Points = 0;
+let player2Points = 0;
+
 (() => {
 	initBoard();
 
@@ -25,6 +28,13 @@ function handleBoardClick(e: PointerEvent) {
 
 	if (clickedCellClasses.contains('block')) {
 		clickedCellClasses.add('broken');
+
+		game.currentPlay === 'player1' ? player1Points++ : player2Points++;
+
+		if (player1Points === 7 || player2Points === 7) {
+			(elements['winnerScreen'] as HTMLParagraphElement).textContent =
+				`${game.currentPlay} Won`;
+		}
 	} else if (clickedCellClasses.contains('item') && clickedCellClasses.length === 2) {
 		clickedCellClasses.add('empty');
 

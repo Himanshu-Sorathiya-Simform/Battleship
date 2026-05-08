@@ -40,8 +40,6 @@ function assignTurn() {
 	const indicator = document.createElement('span');
 	indicator.classList.add('indicator');
 
-	console.log(game.currentPlay);
-
 	const player1Header = elements['player1Header'] as HTMLDivElement;
 	const player2Header = elements['player2Header'] as HTMLDivElement;
 

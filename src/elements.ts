@@ -5,6 +5,7 @@ interface Elements {
 }
 
 const elements: Elements = {
+	winnerScreen: <HTMLParagraphElement>document.querySelector('.winner-screen')!,
 	gameArea: <HTMLDivElement>document.querySelector('.game-area')!,
 	player1Grid: <HTMLDivElement>document.querySelector('.player1-grid')!,
 	player2Grid: <HTMLDivElement>document.querySelector('.player2-grid')!,
