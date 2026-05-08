@@ -36,6 +36,32 @@ function initBoard() {
 	addBlocksAtIndexes();
 }
 
+function assignTurn() {
+	const indicator = document.createElement('span');
+	indicator.classList.add('indicator');
+
+	console.log(game.currentPlay);
+
+	const player1Header = elements['player1Header'] as HTMLDivElement;
+	const player2Header = elements['player2Header'] as HTMLDivElement;
+
+	if (game.currentPlay === 'player1') {
+		!player1Header.lastElementChild?.classList.contains('indicator') &&
+			player1Header.append(indicator);
+
+		player2Header.lastElementChild?.classList.contains('indicator') &&
+			player2Header.lastElementChild?.remove();
+	}
+
+	if (game.currentPlay === 'player2') {
+		!player2Header.lastElementChild?.classList.contains('indicator') &&
+			player2Header.append(indicator);
+
+		player1Header.lastElementChild?.classList.contains('indicator') &&
+			player1Header.lastElementChild?.remove();
+	}
+}
+
 function addBlocksAtIndexes() {
 	const player1GridItems = [
 		...(elements['player1GridItems'] as HTMLCollectionOf<HTMLSpanElement>),
@@ -59,4 +85,4 @@ function addBlocksAtIndexes() {
 	}
 }
 
-export { board, initBoard };
+export { assignTurn, board, initBoard };

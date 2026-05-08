@@ -34,11 +34,23 @@ body {
 	gap: 1rem;
 }
 
+header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.indicator {
+	height: 1rem;
+	width: 1rem;
+	background-color: rgb(0, 98, 255);
+	border-radius: 50%;
+}
+
 .player-grid {
 	border: 1px solid black;
 
 	display: grid;
-	/* grid-template-columns: repeat(6, 1fr); */
 }
 
 .item {
@@ -70,13 +82,7 @@ body {
 }
 
 .block {
-	background-color: rgb(0, 98, 255);
-
 	cursor: pointer;
-}
-
-.hidden {
-	visibility: hidden;
 }
 
 .broken {

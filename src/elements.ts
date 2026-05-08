@@ -9,11 +9,11 @@ const elements: Elements = {
 	player1Grid: <HTMLDivElement>document.querySelector('.player1-grid')!,
 	player2Grid: <HTMLDivElement>document.querySelector('.player2-grid')!,
 	player1GridItems: document.getElementsByClassName('player1-item'),
-
 	player2GridItems: document.getElementsByClassName('player2-item'),
-
-	player1BlocksArea: <HTMLDivElement>document.querySelector('.player1-blocks')!,
-	player2BlocksArea: <HTMLDivElement>document.querySelector('.player2-blocks')!,
+	player1PlayArea: <HTMLDivElement>document.querySelector('.player1-play-area')!,
+	player2PlayArea: <HTMLDivElement>document.querySelector('.player2-play-area')!,
+	player1Header: <HTMLDivElement>document.querySelector('.player1-play-area header')!,
+	player2Header: <HTMLDivElement>document.querySelector('.player2-play-area header')!,
 };
 
 (elements['player1Grid'] as HTMLDivElement).style.gridTemplateColumns =

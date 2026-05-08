@@ -1,9 +1,11 @@
 import { elements } from './elements.js';
-import { initBoard } from './handlers/boardHandlers.js';
+import { assignTurn, initBoard } from './handlers/boardHandlers.js';
 import { game } from './handlers/gameHandlers.js';
 
 (() => {
 	initBoard();
+
+	assignTurn();
 })();
 
 function handleBoardClick(e: PointerEvent) {
@@ -28,6 +30,8 @@ function handleBoardClick(e: PointerEvent) {
 
 		game.currentPlay = game.currentPlay === 'player1' ? 'player2' : 'player1';
 	}
+
+	assignTurn();
 }
 
 (elements['player2Grid'] as HTMLDivElement).addEventListener('click', (e) =>
