@@ -32,6 +32,31 @@ function initBoard() {
 
 	(elements['player1Grid'] as HTMLElement).append(fragment1);
 	(elements['player2Grid'] as HTMLElement).append(fragment2);
+
+	addBlocksAtIndexes();
+}
+
+function addBlocksAtIndexes() {
+	const player1GridItems = [
+		...(elements['player1GridItems'] as HTMLCollectionOf<HTMLSpanElement>),
+	];
+	const player2GridItems = [
+		...(elements['player2GridItems'] as HTMLCollectionOf<HTMLSpanElement>),
+	];
+
+	for (const player in board) {
+		for (const block in board[player]) {
+			const indexes = board[player][block]!.indexes;
+
+			for (const id of indexes) {
+				if (player === 'player1') {
+					player1GridItems?.at(id)?.classList.add('block');
+				} else if (player === 'player2') {
+					player2GridItems?.at(id)?.classList.add('block');
+				}
+			}
+		}
+	}
 }
 
 export { board, initBoard };
