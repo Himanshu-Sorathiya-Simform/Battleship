@@ -8,3 +8,30 @@ body {
 	height: 100vh;
 	max-height: 100vh;
 }
+
+.container {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.game-area {
+	display: flex;
+	gap: 5rem;
+}
+
+.grid {
+	border: 1px solid black;
+
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+}
+
+.item {
+	padding: 1.5rem;
+	border: 1px solid black;
+	cursor: pointer;
+}
