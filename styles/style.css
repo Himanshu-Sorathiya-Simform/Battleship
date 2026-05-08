@@ -30,7 +30,7 @@ body {
 .player-play-area {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	align-items: center;
 	gap: 1rem;
 }
 
@@ -42,14 +42,29 @@ body {
 }
 
 .item {
+	position: relative;
 	padding: 1.5rem;
 	border: 1px solid black;
 	cursor: pointer;
+
+	&::after {
+		content: '';
+
+		font-size: 1.2rem;
+
+		position: absolute;
+
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
 
 .player-blocks {
+	margin-top: auto;
+
 	display: flex;
-	align-items: center;
+	align-items: end;
 	justify-content: center;
 	gap: 1rem;
 }
@@ -63,4 +78,16 @@ body {
 
 .hidden {
 	visibility: hidden;
+}
+
+.broken {
+	background-color: #0545ab;
+}
+
+.empty {
+	background-color: #ffffff;
+
+	&::after {
+		content: 'X';
+	}
 }

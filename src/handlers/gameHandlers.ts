@@ -5,6 +5,7 @@ interface Game {
 	user1: User;
 	user2: User;
 	player2: boolean;
+	currentPlay: User;
 }
 
 const game: Game = {
@@ -12,6 +13,7 @@ const game: Game = {
 	user1: 'player1',
 	user2: 'player2',
 	player2: true,
+	currentPlay: 'player1',
 };
 
 export { game };
