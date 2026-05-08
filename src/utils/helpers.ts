@@ -1,33 +1,61 @@
-import type { User } from '../types.js';
+import { game } from '../handlers/gameHandlers.js';
 
-const cell = <HTMLSpanElement>document.querySelector('.item')!;
+function generatePlayer() {
+	const block1 = generateBlock(3);
+	const block2 = generateBlock(2);
+	const block3 = generateBlock(2);
 
-const cellSize = cell?.getBoundingClientRect().width;
+	const combinedArray = [...block1.indexes, ...block2.indexes, ...block3.indexes];
 
-function generateBlock(size = 2, user: User, player: boolean) {
-	const block = document.createElement('button');
+	const set = new Set([...block1.indexes, ...block2.indexes, ...block3.indexes]);
 
+	if (set.size !== combinedArray.length) {
+		return generatePlayer();
+	}
+
+	return {
+		block1,
+		block2,
+		block3,
+	};
+}
+
+function generateBlock(size = 2) {
 	const isVertical = Math.random() < 0.5 ? true : false;
+	const indexes = generateBlockIndexes(size, isVertical);
 
-	block.style.height = `${(cellSize && (isVertical ? cellSize * size : cellSize)) || 0}px`;
-	block.style.width = `${(cellSize && (isVertical ? cellSize : cellSize * size)) || 0}px`;
-	block.classList.add('block', user);
-
-	if (!player) block.classList.add('hidden');
-
-	return block;
+	return {
+		size,
+		isVertical,
+		indexes,
+	};
 }
 
-function generateBlocks(user: User, player = true) {
-	const block1 = generateBlock(3, user, player);
-	const block2 = generateBlock(2, user, player);
-	const block3 = generateBlock(2, user, player);
+function generateBlockIndexes(size = 2, isVertical: boolean) {
+	const indexes: number[] = [];
+	const index = Math.floor(Math.random() * Math.pow(game.GAME_SIZE, 2));
 
-	return [block1, block2, block3] as [
-		HTMLButtonElement,
-		HTMLButtonElement,
-		HTMLButtonElement,
-	];
+	let row = Math.floor(index / game.GAME_SIZE);
+	let column = index % game.GAME_SIZE;
+
+	while (isVertical && row > 0 && row + size >= game.GAME_SIZE) {
+		row--;
+	}
+	while (!isVertical && column > 0 && column + size >= game.GAME_SIZE) {
+		column--;
+	}
+
+	indexes.push(row * game.GAME_SIZE + column);
+
+	for (let i = 1; i < size; i++) {
+		indexes.push(
+			isVertical ?
+				row * game.GAME_SIZE + column + game.GAME_SIZE * i
+			:	row * game.GAME_SIZE + column + i,
+		);
+	}
+
+	return indexes;
 }
 
-export { generateBlocks };
+export { generatePlayer };
