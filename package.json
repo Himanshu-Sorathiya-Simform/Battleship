@@ -18,5 +18,8 @@
 	"bugs": {
 		"url": "https://github.com/Himanshu-Sorathiya-Simform/Battleship/issues"
 	},
-	"homepage": "https://github.com/Himanshu-Sorathiya-Simform/Battleship#readme"
+	"homepage": "https://github.com/Himanshu-Sorathiya-Simform/Battleship#readme",
+	"devDependencies": {
+		"typescript": "^6.0.3"
+	}
 }
