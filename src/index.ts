@@ -1,9 +1,6 @@
 import { elements } from './elements.js';
 import { assignTurn, initBoard } from './handlers/boardHandlers.js';
-import { game } from './handlers/gameHandlers.js';
-
-let player1Points = 0;
-let player2Points = 0;
+import { callComputer, game } from './handlers/gameHandlers.js';
 
 (() => {
 	initBoard();
@@ -11,7 +8,44 @@ let player2Points = 0;
 	assignTurn();
 })();
 
-function handleBoardClick(e: PointerEvent) {
+function handleBoardClick(clickedCell: HTMLSpanElement) {
+	const clickedCellClasses = clickedCell.classList;
+
+	if (clickedCellClasses.contains('broken') || clickedCellClasses.contains('empty')) {
+		if (!game.player2 && game.currentPlay === 'player2') {
+			callComputer();
+		}
+
+		return;
+	}
+
+	if (clickedCellClasses.contains('block')) {
+		clickedCellClasses.add('broken');
+
+		game.currentPlay === 'player1' ? game.player1Points++ : game.player2Points++;
+
+		if (game.player1Points === 7 || game.player2Points === 7) {
+			(elements['winnerScreen'] as HTMLParagraphElement).textContent =
+				`${game.currentPlay} Won`;
+		}
+
+		if (!game.player2 && game.currentPlay === 'player2') {
+			setTimeout(callComputer, 1000);
+		}
+	} else if (clickedCellClasses.contains('item') && clickedCellClasses.length === 2) {
+		clickedCellClasses.add('empty');
+
+		if (!game.player2 && game.currentPlay === 'player1') {
+			setTimeout(callComputer, 1500);
+		}
+
+		game.currentPlay = game.currentPlay === 'player1' ? 'player2' : 'player1';
+	}
+
+	assignTurn();
+}
+
+(elements['player2Grid'] as HTMLDivElement).addEventListener('click', (e) => {
 	const target = e.target as HTMLElement;
 
 	const clickedGrid = <HTMLDivElement>target.closest('.player-grid');
@@ -21,33 +55,22 @@ function handleBoardClick(e: PointerEvent) {
 
 	if (!clickedCell || clickedGrid.classList[1]?.startsWith(currentPlay)) return;
 
-	const clickedCellClasses = clickedCell.classList;
+	handleBoardClick(clickedCell);
+});
 
-	if (clickedCellClasses.contains('broken') || clickedCellClasses.contains('empty'))
-		return;
+if (game.player2) {
+	(elements['player1Grid'] as HTMLDivElement).addEventListener('click', (e) => {
+		const target = e.target as HTMLElement;
 
-	if (clickedCellClasses.contains('block')) {
-		clickedCellClasses.add('broken');
+		const clickedGrid = <HTMLDivElement>target.closest('.player-grid');
+		const clickedCell = <HTMLSpanElement>target.closest('.item');
 
-		game.currentPlay === 'player1' ? player1Points++ : player2Points++;
+		const { currentPlay } = game;
 
-		if (player1Points === 7 || player2Points === 7) {
-			(elements['winnerScreen'] as HTMLParagraphElement).textContent =
-				`${game.currentPlay} Won`;
-		}
-	} else if (clickedCellClasses.contains('item') && clickedCellClasses.length === 2) {
-		clickedCellClasses.add('empty');
+		if (!clickedCell || clickedGrid.classList[1]?.startsWith(currentPlay)) return;
 
-		game.currentPlay = game.currentPlay === 'player1' ? 'player2' : 'player1';
-	}
-
-	assignTurn();
+		handleBoardClick(clickedCell);
+	});
 }
 
-(elements['player2Grid'] as HTMLDivElement).addEventListener('click', (e) =>
-	handleBoardClick(e),
-);
-
-(elements['player1Grid'] as HTMLDivElement).addEventListener('click', (e) =>
-	handleBoardClick(e),
-);
+export { handleBoardClick };
